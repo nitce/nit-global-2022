@@ -1,0 +1,29 @@
+# kruskal pseudo-code
+
+
+function Kruskal(g: Graph) {
+	# Checks wheter if it forms a cycle or not
+	function check(g: Graph, dsu: DSU, e: Edge) {
+		# It's equivalent to that at least
+		# one of the nodes is new (unvisited).
+		return dsu[e.start] != dsu[e.end]
+	}
+
+	sort (edges) by weight
+
+	# Construct a simple DSU
+	# dsu[i] = i for all nodes
+	dsu = new DSU(g)
+	
+	# Copy the graph exluding the edges
+	mst = Graph.onlyNodes(g)
+	
+	for edge in edges {
+		if check(g, mst, edge) {
+			mst.addEdge(edge);
+			dsu.union(edge.start, edge.end)
+		}
+	}
+	
+	return mst
+}
